@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="be.aboutme.airserver.messages.serialization.IMessageSerializer"/>
+    <classEntry path="be.aboutme.airserver.messages.serialization.NativeObjectSerializer"/>
+    <classEntry path="be.aboutme.airserver.endpoints.socket.handlers.SocketClientHandlerFactory"/>
+    <classEntry path="be.aboutme.airserver.endpoints.socket.handlers.plain.PlainTextSocketClientHandlerFactory"/>
+    <classEntry path="be.aboutme.airserver.endpoints.socket.handlers.websocket.WebSocketClientHandlerFactory"/>
+    <classEntry path="be.aboutme.airserver.endpoints.udp.UDPEndPoint"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

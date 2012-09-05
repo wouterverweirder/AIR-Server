@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Websockets test</title>
+<style>
+	#connect, #connected
+	{
+		display: none;
+	}
+	
+	textarea
+	{
+		width: 400px;
+		height: 300px;
+	}
+</style>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript" src="jquery-1.6.1.min.js"></script>
+<script type="text/javascript">
+	
+	var socket;
+
+	$(document).ready(init);
+	
+	function init()
+	{
+		$("#connect").show();
+		$("#connect input[type=submit]").click(connectHandler);
+		$("#connected input[type=submit]").click(submitHandler);
+	}
+	
+	function connectHandler()
+	{
+		try
+		{
+			socket = new WebSocket("ws://" + $("#ip").val() + ":" + $("#port").val());
+			socket.onopen = socketOpenHandler;
+			socket.onmessage = socketMessageHandler;
+			socket.onclose = socketCloseHandler;
+		}
+		catch(exception)
+		{
+			alert("Error: " + exception);
+		}
+		return false;
+	}
+	
+	function socketOpenHandler()
+	{
+		$("#connect").hide();
+		$("#connected").show();
+	}
+	
+	function socketMessageHandler(msg)
+	{
+		
+		var decoded = JSON.parse(msg.data.replace(/[\u0000\u00ff]/g, ''));
+		$("#output").val($("#output").val() + "<client" + decoded.senderId + "> " + decoded.data + "\n").animate({ scrollTop: $("#output").height() }, 0);
+	}
+	
+	function socketCloseHandler()
+	{
+		alert("close");
+		$("#connect").show();
+		$("#connected").hide();
+	}
+	
+	function submitHandler()
+	{
+		try
+		{
+			var message = {};
+			message.command = "MESSAGE";
+			message.data = $("#message").val();
+			socket.send(JSON.stringify(message));
+			$("#message").val("");
+		}
+		catch(exception)
+		{
+			alert("Error: " + exception);
+		}
+		return false;
+	}
+	
+</script>
+</head>
+<body>
+
+	<div id="connect">
+    	<form method="post" action="">
+        	<div class="text">
+            	<label for="ip">IP:</label>
+                <input type="text" id="ip" name="ip" value="127.0.0.1" />
+            </div>
+            <div class="text">
+            	<label for="port">Port:</label>
+                <input type="text" id="port" name="port" value="1235" />
+            </div>
+            <div class="button">
+            	<input type="submit" value="connect" />
+            </div>
+        </form>
+    </div>
+    
+    <div id="connected">
+    	<form method="post" action="">
+        	<div class="textarea">
+            	<textarea id="output"></textarea>
+            </div>
+            <div class="text">
+            	<label for="message">Message:</label>
+                <input type="text" id="message" name="message" />
+            </div>
+            <div class="button">
+            	<input type="submit" value="send" />
+            </div>
+        </form>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" currentState="not_connected">
+	<s:states>
+		<s:State name="not_connected"/>
+		<s:State name="connected"/>
+	</s:states>
+	<s:layout>
+		<s:VerticalLayout paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+			
+			private var socket:Socket;
+			
+			protected function connect():void
+			{
+				if(socket != null)
+				{
+					//cleanup
+				}
+				socket = new Socket();
+				
+				socket.addEventListener(Event.CONNECT, connectHandler);
+				socket.addEventListener(ProgressEvent.SOCKET_DATA, socketDataHandler);
+				socket.addEventListener(Event.CLOSE, closeHandler);
+				
+				socket.connect("localhost", int(port.text));
+			}
+			
+			private function connectHandler(event:Event):void
+			{
+				currentState = "connected";
+			}
+			
+			private function closeHandler(event:Event):void
+			{
+				currentState = "not_connected";
+			}
+			
+			
+			protected function sendInput():void
+			{
+				socket.writeObject(inputField.text);
+				socket.flush();
+				inputField.text = "";
+			}
+			
+			private function socketDataHandler(event:ProgressEvent):void
+			{
+				while(socket.bytesAvailable > 0)
+				{
+					try
+					{
+						var message:Object = socket.readObject();
+						outputField.appendText("<client" + message.senderId + "> " + message.data + "\n");
+					}
+					catch(e:Error)
+					{
+					}
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Group width="100%" height="100%" includeIn="not_connected">
+		<s:Panel width="250" horizontalCenter="0" verticalCenter="0" title="Create Connection">
+			<mx:Form width="100%" height="100%">
+				<mx:FormItem label="Port:" width="100%">
+					<s:TextInput id="port" text="1234"/>
+				</mx:FormItem>
+				<mx:FormItem width="100%">
+					<s:Button label="Connect" click="connect()"/>
+				</mx:FormItem>
+			</mx:Form>
+		</s:Panel>
+	</s:Group>
+	<s:Label text="Socket AMF Client" includeIn="connected" fontSize="22" fontWeight="bold"/>
+	<s:TextArea id="outputField" includeIn="connected" width="100%" height="100%"/>
+	<s:HGroup width="100%" includeIn="connected">
+		<s:TextInput id="inputField" width="100%" enter="sendInput()"/>
+		<s:Button label="Send" id="sendButton" click="sendInput()"/>
+	</s:HGroup>
+</s:Application>

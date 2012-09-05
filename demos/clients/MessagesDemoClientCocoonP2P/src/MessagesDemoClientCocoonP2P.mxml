@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:com="http://com.projectcocoon.p2p">
+	<s:layout>
+		<s:VerticalLayout paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10"/>
+	</s:layout>
+	<fx:Declarations>
+		<com:LocalNetworkDiscovery
+			id="networkDiscovery" autoConnect="true" groupName="be.aboutme.airserver.demos.Messages"
+			dataReceived="dataReceivedHandler(event)"/>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.projectcocoon.p2p.events.MessageEvent;
+			import com.projectcocoon.p2p.vo.ClientVO;
+			
+			import mx.events.FlexEvent;
+			
+			private function sendInput():void
+			{
+				for each(var client:ClientVO in networkDiscovery.clients)
+				{
+					if(client.clientName == "AIRServer")
+					{
+						networkDiscovery.sendMessageToClient(inputField.text, client.groupID);
+						inputField.text = "";
+						return;
+					}
+				}
+				trace("NO SERVER DETECTED, SENDING IT TO THE PEERS");
+				//we send it to all now, we only need the server
+				networkDiscovery.sendMessageToAll(inputField.text);
+				inputField.text = "";
+			}
+			
+			
+			protected function dataReceivedHandler(event:MessageEvent):void
+			{
+				if(event.message.data.hasOwnProperty("data")) outputField.appendText("<client" + event.message.data.senderId + "> " + event.message.data.data + "\n");
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Label text="Cocoon P2P Client" fontSize="22" fontWeight="bold"/>
+	<s:TextArea id="outputField" width="100%" height="100%"/>
+	<s:HGroup width="100%">
+		<s:TextInput id="inputField" width="100%" enter="sendInput()"/>
+		<s:Button label="Send" id="sendButton" click="sendInput()"/>
+	</s:HGroup>
+	
+	
+</s:Application>

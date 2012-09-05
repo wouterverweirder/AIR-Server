@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   applicationComplete="init()">
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<fx:Script>
+		<![CDATA[
+			import be.aboutme.airserver.AIRServer;
+			import be.aboutme.airserver.endpoints.cocoonP2P.CocoonP2PEndPoint;
+			import be.aboutme.airserver.endpoints.socket.SocketEndPoint;
+			import be.aboutme.airserver.endpoints.socket.handlers.amf.AMFSocketClientHandlerFactory;
+			import be.aboutme.airserver.endpoints.socket.handlers.websocket.WebSocketClientHandlerFactory;
+			import be.aboutme.airserver.endpoints.udp.UDPEndPoint;
+			import be.aboutme.airserver.events.AIRServerEvent;
+			import be.aboutme.airserver.events.MessageReceivedEvent;
+			import be.aboutme.airserver.messages.serialization.JSONSerializer;
+			import be.aboutme.airserver.messages.serialization.NativeObjectSerializer;
+			
+			private var server:AIRServer;
+			
+			private function init():void
+			{
+				NativeApplication.nativeApplication.addEventListener(Event.EXITING, exitingHandler, false, 0, true);
+				
+				server = new AIRServer();
+				//add the listening endpoints
+				server.addEndPoint(new SocketEndPoint(1234, new AMFSocketClientHandlerFactory()));
+				server.addEndPoint(new SocketEndPoint(1235, new WebSocketClientHandlerFactory()));
+				server.addEndPoint(new UDPEndPoint(1236, new NativeObjectSerializer(), 60000));
+				server.addEndPoint(new CocoonP2PEndPoint("be.aboutme.airserver.demos.Messages"));
+				outputArea.appendText("Listening for AMF Sockets on port 1234\n");
+				outputArea.appendText("Listening for WebSockets on port 1235\n");
+				outputArea.appendText("Listening for UDP on port 1236\n");
+				outputArea.appendText("Joined Netgroup be.aboutme.airserver.demos.Messages\n");
+				//add event listeners
+				server.addEventListener(AIRServerEvent.CLIENT_ADDED, clientAddedHandler, false, 0, true);
+				server.addEventListener(AIRServerEvent.CLIENT_REMOVED, clientRemovedHandler, false, 0, true);
+				server.addEventListener(MessageReceivedEvent.MESSAGE_RECEIVED, messageReceivedHandler, false, 0, true);
+				//start the server
+				server.start();
+			}
+			
+			private function exitingHandler(event:Event):void
+			{
+				server.stop();
+			}
+			
+			private function clientAddedHandler(event:AIRServerEvent):void
+			{
+				outputArea.appendText("Client added: " + event.client.id + "\n");
+			}
+			
+			private function clientRemovedHandler(event:AIRServerEvent):void
+			{
+				outputArea.appendText("Client removed: " + event.client.id + "\n");
+			}
+			
+			private function messageReceivedHandler(event:MessageReceivedEvent):void
+			{
+				outputArea.appendText("<client" + event.message.senderId + "> " + event.message.data + "\n");
+				switch(event.message.command)
+				{
+					case "PORT":
+					case "ADDR":
+						//don't forward PORT or ADDR commands from UDP
+						break;
+					default:
+						//forward the message to all connected clients
+						server.sendMessageToAllClients(event.message);
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:TextArea id="outputArea" editable="false" width="100%" height="100%"/>
+</s:WindowedApplication>
