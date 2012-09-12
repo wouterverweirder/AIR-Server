@@ -13,6 +13,7 @@
 			import be.aboutme.airserver.endpoints.cocoonP2P.CocoonP2PEndPoint;
 			import be.aboutme.airserver.endpoints.socket.SocketEndPoint;
 			import be.aboutme.airserver.endpoints.socket.handlers.amf.AMFSocketClientHandlerFactory;
+			import be.aboutme.airserver.endpoints.socket.handlers.plain.PlainTextSocketClientHandlerFactory;
 			import be.aboutme.airserver.endpoints.socket.handlers.websocket.WebSocketClientHandlerFactory;
 			import be.aboutme.airserver.endpoints.udp.UDPEndPoint;
 			import be.aboutme.airserver.events.AIRServerEvent;
@@ -28,10 +29,12 @@
 				
 				server = new AIRServer();
 				//add the listening endpoints
+				server.addEndPoint(new SocketEndPoint(1233, new PlainTextSocketClientHandlerFactory()));
 				server.addEndPoint(new SocketEndPoint(1234, new AMFSocketClientHandlerFactory()));
 				server.addEndPoint(new SocketEndPoint(1235, new WebSocketClientHandlerFactory()));
 				server.addEndPoint(new UDPEndPoint(1236, new NativeObjectSerializer(), 60000));
 				server.addEndPoint(new CocoonP2PEndPoint("be.aboutme.airserver.demos.Messages"));
+				outputArea.appendText("Listening for Text Sockets on port 1233\n");
 				outputArea.appendText("Listening for AMF Sockets on port 1234\n");
 				outputArea.appendText("Listening for WebSockets on port 1235\n");
 				outputArea.appendText("Listening for UDP on port 1236\n");

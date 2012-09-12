@@ -7,6 +7,7 @@
     <classEntry path="be.aboutme.airserver.endpoints.socket.handlers.plain.PlainTextSocketClientHandlerFactory"/>
     <classEntry path="be.aboutme.airserver.endpoints.socket.handlers.websocket.WebSocketClientHandlerFactory"/>
     <classEntry path="be.aboutme.airserver.endpoints.udp.UDPEndPoint"/>
+    <classEntry path="be.aboutme.airserver.messages.serialization.PlainTextSerializer"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
