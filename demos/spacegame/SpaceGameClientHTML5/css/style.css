@@ -1,0 +1,304 @@
+@font-face {
+    font-family: 'SilomRegular';
+    src: url('../fonts/silom-webfont.eot');
+    src: url('../fonts/silom-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/silom-webfont.woff') format('woff'),
+         url('../fonts/silom-webfont.ttf') format('truetype'),
+         url('../fonts/silom-webfont.svg#SilomRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body
+{
+    background-color: #000000;
+}
+
+.mainView
+{
+    background-image: url("../images/highres/background.png");
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-color: #000000;
+}
+
+.clearBackground, .connectionForm .x-panel-body
+{
+    background: none;
+}
+
+#wrapper{
+	height:100%;
+	width:100%;
+	display:table;
+	vertical-align:middle;
+}
+#outer{
+	display:table-cell;
+	vertical-align:middle;
+}
+#contentwrap{
+	position:relative;
+	left:50%;
+	float:left;
+}
+#content{
+	padding:0px 0px;
+	position:relative;
+	text-align:center;
+	left:-50%;
+}
+
+.button
+{
+    position: relative;
+    width: 368px;
+    height: 96px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button .background
+{
+    position: absolute;
+    background-image: url("../images/highres/knop_background.png");
+    width: 368px;
+    height: 96px;
+}
+
+.button .label
+{
+    position: absolute;
+    color: #FFFFFF;
+    font-family: "SilomRegular";
+    font-size: 41px;
+    text-align: center;
+    width: 368px;
+    top: 10px;
+}
+
+#calibrate
+{
+    width: 588px;
+    height: 382px;
+    background-image: url("../images/highres/calibrate_background.png");
+    background-repeat: no-repeat;
+}
+
+#calibrate .schijf_container
+{
+    position: relative;
+    left: 131px;
+    top: 0px;
+}
+
+#calibrate .schijf_container .horizon_ok, #calibrate .schijf_container .horizon_nok
+{
+    position: absolute;
+    width: 325px;
+    height: 6px;
+    top: 184px;
+    background-repeat: no-repeat;
+}
+
+#calibrate .schijf_container .horizon_ok
+{
+    background-image: url("../images/highres/calibrate_horizon_green.png");
+}
+
+#calibrate .schijf_container .horizon_nok
+{
+    background-image: url("../images/highres/calibrate_horizon_red.png");
+}
+
+#calibrate .schijf_container #schijf
+{
+    position: absolute;
+    width: 259px;
+    height: 258px;
+    background-image: url("../images/highres/calibrate_schijf.png");
+    background-repeat: no-repeat;
+    left: 32px;
+    top: 60px;
+}
+
+#calibrate .schijf_container #schijf #lines_ok, #calibrate .schijf_container #schijf #lines_nok
+{
+    position: absolute;
+    top: 124px;
+    width: 259px;
+    height: 113px;
+    background-repeat: no-repeat;
+}
+
+#calibrate .schijf_container #schijf #lines_ok
+{
+    background-image: url("../images/highres/calibrate_lines_green.png");
+}
+
+#calibrate .schijf_container #schijf #lines_nok
+{
+    background-image: url("../images/highres/calibrate_lines_red.png");
+}
+
+#playingBackground
+{
+    position: relative;
+    background-image: url("../images/highres/playing_background.png");
+    background-repeat: no-repeat;
+    width: 325px;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#playingNameField
+{
+    position: absolute;
+    color: #FFFFFF;
+    font-family: "SilomRegular";
+    font-size: 30px;
+    text-align: center;
+    width: 368px;
+    top: 368px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#mySpaceShip
+{
+    position: absolute;
+    width: 110px;
+    height: 84px;
+    left: 114px;
+    top: 184px;
+}
+
+#winner
+{
+    background-image: url("../images/highres/finished_win.png");
+    background-repeat: no-repeat;
+    width: 363px;
+    height: 98px;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#loser
+{
+    background-image: url("../images/highres/finished_lose.png");
+    width: 462px;
+    height: 98px;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* RETINA DISPLAY CSS */
+@media only screen and (-webkit-min-device-pixel-ratio: 2)
+{
+    .mainView
+    {
+        -webkit-background-size: 472px 316px;
+    }
+
+    .button
+    {
+        width: 184px;
+        height: 48px;
+    }
+
+    .button .background
+    {
+        width: 184px;
+        height: 48px;
+        -webkit-background-size: 184px 48px;
+    }
+
+    .button .label
+    {
+        font-size: 20px;
+        width: 184px;
+        top: 5px;
+    }
+
+    #calibrate
+    {
+        width: 294px;
+        height: 191px;
+        -webkit-background-size: 294px 191px;
+    }
+
+    #calibrate .schijf_container
+    {
+        left: 65px;
+        top: 0px;
+    }
+
+    #calibrate .schijf_container .horizon_ok, #calibrate .schijf_container .horizon_nok
+    {
+        width: 162px;
+        height: 3px;
+        top: 92px;
+        -webkit-background-size: 162px 3px;
+    }
+
+    #calibrate .schijf_container #schijf
+    {
+        width: 129px;
+        height: 129px;
+        left: 16px;
+        top: 30px;
+        -webkit-background-size: 129px 129px;
+    }
+
+    #calibrate .schijf_container #schijf #lines_ok, #calibrate .schijf_container #schijf #lines_nok
+    {
+        top: 62px;
+        width: 129px;
+        height: 56px;
+        -webkit-background-size: 129px 56px;
+    }
+
+    #playingBackground
+    {
+        width: 162px;
+        height: 200px;
+        -webkit-background-size: 162px 174px;
+    }
+
+    #playingNameField
+    {
+        font-size: 15px;
+        width: 184px;
+        top: 184px;
+    }
+
+    #mySpaceShip
+    {
+        width: 55px;
+        height: 42px;
+        left: 57px;
+        top: 92px;
+        -webkit-background-size: 55px 42px;
+    }
+
+    #winner
+    {
+        width: 181px;
+        height: 49px;
+        margin-bottom: 25px;
+        -webkit-background-size: 181px 49px;
+    }
+
+    #loser
+    {
+        width: 231px;
+        height: 49px;
+        margin-bottom: 25px;
+        -webkit-background-size: 231px 49px;
+    }
+}

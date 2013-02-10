@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<application xmlns="http://ns.adobe.com/air/application/3.1">
+	<id>be.devine.spacegame.mobilecontroller.SpaceControl</id>
+	<filename>SpaceControl</filename>
+	<name>Space Control</name>
+	<versionNumber>0.9.0</versionNumber>
+	<initialWindow>
+		<content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
+		<fullScreen>true</fullScreen>
+		<autoOrients>false</autoOrients>
+		<aspectRatio>landscape</aspectRatio>
+		<renderMode>cpu</renderMode>
+	<visible>false</visible>
+    </initialWindow>
+    <android>
+        <colorDepth>16bit</colorDepth>
+        <manifestAdditions><![CDATA[
+			<manifest android:installLocation="auto">
+			    <!--See the Adobe AIR documentation for more information about setting Google Android permissions-->
+			    <!--Removing the permission android.permission.INTERNET will have the side effect
+					of preventing you from debugging your application on your device-->
+			    <uses-permission android:name="android.permission.INTERNET"/>
+			    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
+			    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
+			    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->
+			    <!--The DISABLE_KEYGUARD and WAKE_LOCK permissions should be toggled together
+					in order to access AIR's SystemIdleMode APIs-->
+			    <!--<uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>-->
+			    <!--<uses-permission android:name="android.permission.WAKE_LOCK"/>-->
+			    <!--<uses-permission android:name="android.permission.CAMERA"/>-->
+			    <!--<uses-permission android:name="android.permission.RECORD_AUDIO"/>-->
+			    <!--The ACCESS_NETWORK_STATE and ACCESS_WIFI_STATE permissions should be toggled
+					together in order to use AIR's NetworkInfo APIs-->
+			    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>-->
+			    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>-->
+			</manifest>
+			
+		]]></manifestAdditions>
+    </android>
+	<iPhone>
+		<InfoAdditions>
+			<![CDATA[
+				<key>UIRequiresPersistentWiFi</key>  
+				<true />
+				<key>UIApplicationExitsOnSuspend</key>
+				<true />
+				<key>UIDeviceFamily</key>
+				<array>
+					<string>1</string>
+					<string>2</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<true />
+			]]>
+		</InfoAdditions>
+		<requestedDisplayResolution>high</requestedDisplayResolution>
+	</iPhone>
+	<icon>
+		<image29x29>assets/Icon_29.png</image29x29>
+		<image57x57>assets/Icon_57.png</image57x57>
+		<image72x72>assets/Icon_72.png</image72x72>
+		<image114x114>assets/Icon_114.png</image114x114>
+		<image512x512>assets/Icon_512.png</image512x512>
+	</icon>
+	<supportedProfiles>mobileDevice extendedMobileDevice</supportedProfiles>
+	<extensions>
+        <extensionID>be.aboutme.nativeExtensions.udp.UDPSocket</extensionID>
+    </extensions>
+</application>

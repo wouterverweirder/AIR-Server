@@ -71,8 +71,11 @@ package be.aboutme.airserver.endpoints.udp
 		
 		public function handleData(data:ByteArray):void
 		{
-			timeoutTimer.reset();
-			timeoutTimer.start();
+			if(timeoutTimer != null)
+			{
+				timeoutTimer.reset();
+				timeoutTimer.start();
+			}
 			var input:Object;
 			while(data.bytesAvailable > 0)
 			{
