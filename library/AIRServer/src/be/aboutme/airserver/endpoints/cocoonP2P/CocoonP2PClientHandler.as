@@ -70,7 +70,11 @@ package be.aboutme.airserver.endpoints.cocoonP2P
 			if(messagesToHandle.length > 0)
 			{
 				message = new Message();
-				message.data = messagesToHandle.shift();
+
+				var tmp:Object = messagesToHandle.shift();
+				message.command = tmp.command;
+				message.data = tmp.data;
+				message.senderId = tmp.senderId;
 				
 				_messagesAvailable = (messagesToHandle.length > 0);
 			}
